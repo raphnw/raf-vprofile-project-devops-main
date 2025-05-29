@@ -43,7 +43,11 @@
 		<div class="align-center">
  			<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
  			<input type="hidden"  name="userName"   value="${pageContext.request.userPrincipal.name}"/> 
+<<<<<<< HEAD
 
+=======
+			<input type="submit" class="btn btn-info" value="Upload">
+>>>>>>> cdbce970c7a456416720070802fc86f3e3e63cab
 		</div>
 	</form>	
   </div>

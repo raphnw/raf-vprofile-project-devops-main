@@ -1843,7 +1843,11 @@ pre code {
 
 @media (min-width: 1200px) {
     .container {
+<<<<<<< HEAD
         width: 100%;
+=======
+        width: 1170px
+>>>>>>> cdbce970c7a456416720070802fc86f3e3e63cab
     }
 }
 
@@ -1852,11 +1856,18 @@ pre code {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto
+<<<<<<< HEAD
 
 }
 
 .row {
     margin-right: 50px;
+=======
+}
+
+.row {
+    margin-right: -15px;
+>>>>>>> cdbce970c7a456416720070802fc86f3e3e63cab
     margin-left: -15px
 }
 
@@ -4493,7 +4504,10 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
     min-height: 50px;
     margin-bottom: 20px;
     border: 1px solid transparent
+<<<<<<< HEAD
 
+=======
+>>>>>>> cdbce970c7a456416720070802fc86f3e3e63cab
 }
 
 @media (min-width: 768px) {
@@ -4605,7 +4619,11 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
 }
 
 .navbar-brand {
+<<<<<<< HEAD
     float: right;
+=======
+    float: left;
+>>>>>>> cdbce970c7a456416720070802fc86f3e3e63cab
     height: 50px;
     padding: 15px 15px;
     font-size: 18px;
@@ -4622,10 +4640,14 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
 
 @media (min-width: 768px) {
     .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+<<<<<<< HEAD
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
+=======
+        margin-left: -15px
+>>>>>>> cdbce970c7a456416720070802fc86f3e3e63cab
     }
 }
 

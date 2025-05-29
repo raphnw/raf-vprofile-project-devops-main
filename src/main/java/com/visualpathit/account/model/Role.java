@@ -1,7 +1,11 @@
 package com.visualpathit.account.model;
 
+<<<<<<< HEAD
 import jakarta.persistence.*;
 
+=======
+import javax.persistence.*;
+>>>>>>> cdbce970c7a456416720070802fc86f3e3e63cab
 import java.util.Set;
 /**{@author imrant} !*/
 @Entity
@@ -15,7 +19,11 @@ public class Role {
     private Set<User> users;
     /** {@inheritDoc}} !*/
     @Id
+<<<<<<< HEAD
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+=======
+    @GeneratedValue(strategy = GenerationType.AUTO)
+>>>>>>> cdbce970c7a456416720070802fc86f3e3e63cab
     /**
      * {@link Role#id}
      !*/
