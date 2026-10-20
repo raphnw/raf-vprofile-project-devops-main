@@ -12,3 +12,48 @@ choco install minikube kubernetes-cli -y
 
 ##Execute to Setup Minikube cluster
 minikube start
+
+
+## ---------------------------------------------------------------
+## UPDATE: Use the Docker driver if VirtualBox fails
+## ---------------------------------------------------------------
+## If "minikube start" fails with:
+##   "This computer doesn't have VT-X/AMD-v enabled"
+## it means Hyper-V / WSL is already using the CPU virtualization,
+## so VirtualBox cannot use it. Use Docker Desktop instead.
+
+## 1. Remove the failed VirtualBox cluster
+minikube delete
+
+## 2. Open Docker Desktop and wait until it says "Engine running"
+##    Check it is ready (should print a version number):
+docker version --format "{{.Server.Version}}"
+
+## 3. Start Minikube with the Docker driver
+minikube start --driver=docker
+
+## (Optional) Make Docker the default driver so plain "minikube start" works
+minikube config set driver docker
+
+
+## ---------------------------------------------------------------
+## Verify the cluster
+## ---------------------------------------------------------------
+kubectl get nodes
+kubectl get pods -A
+
+## If kubectl shows version warnings, use the matching kubectl from Minikube:
+minikube kubectl -- get pods -A
+
+
+## ---------------------------------------------------------------
+## Daily use
+## ---------------------------------------------------------------
+## Docker Desktop must be running before these
+minikube stop
+minikube start
+minikube status
+
+## Switch kubectl between clusters (e.g. back to Azure AKS)
+kubectl config get-contexts
+kubectl config use-context minikube
