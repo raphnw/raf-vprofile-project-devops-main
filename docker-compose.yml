@@ -1,12 +1,14 @@
 # Run the whole vprofile stack from the repo root:
 #   docker compose up -d --build
+# Push the built images to Docker Hub (after docker login):
+#   docker compose push
 # Then open http://localhost (or the server's IP)
 
 services:
   vprodb:
     build:
       context: ./Docker-files/db
-    image: raf-vprofile-db
+    image: sonako2000/raf-vprofile-db
     container_name: vprodb
     environment:
       MYSQL_ROOT_PASSWORD: vprodbpass
@@ -32,7 +34,7 @@ services:
     build:
       context: .
       dockerfile: Docker-files/app/Dockerfile
-    image: raf-vprofile-app
+    image: sonako2000/raf-vprofile-app
     container_name: vproapp
     depends_on:
       vprodb:
@@ -45,7 +47,7 @@ services:
   vproweb:
     build:
       context: ./Docker-files/web
-    image: raf-vprofile-web
+    image: sonako2000/raf-vprofile-web
     container_name: vproweb
     ports:
       - "80:80"
