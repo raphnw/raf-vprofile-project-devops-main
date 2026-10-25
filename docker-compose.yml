@@ -1,0 +1,56 @@
+# Run the whole vprofile stack from the repo root:
+#   docker compose up -d --build
+# Then open http://localhost (or the server's IP)
+
+services:
+  vprodb:
+    build:
+      context: ./Docker-files/db
+    image: raf-vprofile-db
+    container_name: vprodb
+    environment:
+      MYSQL_ROOT_PASSWORD: vprodbpass
+    volumes:
+      - vprodbdata:/var/lib/mysql
+    healthcheck:
+      # 127.0.0.1 only answers once setup is done and the real server is up
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  vprocache01:
+    image: memcached:1.6-alpine
+    container_name: vprocache01
+
+  vpromq01:
+    image: rabbitmq:4-management-alpine
+    container_name: vpromq01
+
+  vproapp:
+    build:
+      context: .
+      dockerfile: Docker-files/app/Dockerfile
+    image: raf-vprofile-app
+    container_name: vproapp
+    depends_on:
+      vprodb:
+        condition: service_healthy
+      vprocache01:
+        condition: service_started
+      vpromq01:
+        condition: service_started
+
+  vproweb:
+    build:
+      context: ./Docker-files/web
+    image: raf-vprofile-web
+    container_name: vproweb
+    ports:
+      - "80:80"
+    depends_on:
+      - vproapp
+
+volumes:
+  vprodbdata: {}
