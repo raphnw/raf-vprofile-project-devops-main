@@ -1,17 +1,18 @@
-FROM openjdk:11 AS BUILD_IMAGE
-RUN apt update && apt install maven -y
-RUN git clone https://github.com/raphnw/raf-vprofile-project.git
-#RUN git clone --branch docker https://github.com/raphnw/raf-vprofile-project.git
-#RUN cd raf-vprofile-project && mvn install 
-RUN cd raf-vprofile-project && git checkout docker && mvn install 
+# Build from the repo root:
+#   docker build -f Docker-files/app/Dockerfile -t raf-vprofile-app .
 
+# Stage 1: build the WAR with Maven + JDK 11
+FROM maven:3.9-eclipse-temurin-11 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+# The cache mount keeps downloaded Maven dependencies between builds
+RUN --mount=type=cache,target=/root/.m2 mvn package -B
+
+# Stage 2: run the WAR on Tomcat 9
 FROM tomcat:9-jre11
-LABEL "Project"="raf-vprofile"
-LABEL "Author"="Raf"
+LABEL project="raf-vprofile" author="Raf"
 RUN rm -rf /usr/local/tomcat/webapps/*
-COPY --from=BUILD_IMAGE raf-vprofile-project/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
-
+COPY --from=build /app/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
-#WORKDIR /usr/local/tomcat/
-#VOLUME /usr/local/tomcat/webapps
