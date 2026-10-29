@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vproapp
+  labels:
+    app: vproapp
+spec:
+  containers:
+  - name: appcontainer
+    image: sonako2000/raf-vprofile-app:latest
+    ports:
+    - name: vproapp-port
+      containerPort: 8080
