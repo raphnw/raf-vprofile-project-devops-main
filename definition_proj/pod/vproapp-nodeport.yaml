@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+  labels:
+    app: vproapp
+spec:
+  ports:
+  - port: 8090
+    nodePort: 30002
+    targetPort: vproapp-port
+    protocol: TCP
+  selector:
+    app: vproapp
+  type: NodePort
